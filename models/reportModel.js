@@ -13,14 +13,14 @@ const reportSchema = new mongoose.Schema({
 	required: true,
 
 	date: {
-		type: Number,
+		type: Date,
 		required: true,
 	},
 	hours: {
-		type: Number,
+		type: String,
 		required: true,
 	},
-	adress: {
+	alertAdress: {
 		type: String,
 		required: true,
 		minlength: [3, "L'adresse doit contenir au moins 3 caractères"],
@@ -45,7 +45,7 @@ const reportSchema = new mongoose.Schema({
 		maxlength: [100, "L'adresse ne doit pas dépasser 100 caractères"],
 	},
 	postCode: {
-		type: Number,
+		type: String,
 		required: true,
 		minimum: [2, 'Le code postal doit contenir au moins 2 caractères'],
 		maximum: [5, 'Le code postal ne doit pas dépasser 5 caractères'],
@@ -57,13 +57,13 @@ const reportSchema = new mongoose.Schema({
 		maxlength: [30, 'Le nom de la ville ne doit pas dépasser 30 caractères'],
 	},
 	phone: {
-		type: Number,
+		type: String,
 		required: true,
 		minimum: [10, 'Le numéro de téléphone doit contenir au moins 10 chiffres'],
 		maximum: [13, 'Le numéro de téléphone ne doit pas dépasser 13 chiffres'],
 	},
 	email: {
-		type: string,
+		type: String,
 		match: [
 			/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
 			'Merci de fournir un email valide',
@@ -78,4 +78,4 @@ const reportSchema = new mongoose.Schema({
 });
 
 // export the user models
-module.exports = mongoose.model('User', userSchema);
+export default mongoose.model('Report', reportSchema);
