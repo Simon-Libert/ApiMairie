@@ -1,8 +1,10 @@
-require('dotenv').config();
-const express = require('express');
+import dotenv from 'dotenv';
+dotenv.config();
+
+import express from 'express';
 const app = express();
-const connectDb = require('./config/db');
-const userRoutes = require('./routes/userRoutes');
+import connectDb from './config/db.js';
+import reportRoutes from './routes/report/Routes.js';
 
 const appPort = process.env.APP_PORT || 3500;
 
@@ -18,4 +20,4 @@ const start = async () => {
 start();
 
 //routes
-app.use('/api/reports/users', userRoutes);
+app.use('/api/v1/reports', reportRoutes);

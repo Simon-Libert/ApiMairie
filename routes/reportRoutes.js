@@ -1,7 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const userController = require('../controllers/userController');
+import { Router } from 'express';
+const router = Router();
+import { getAllReports } from '../controllers/reportController.js';
 
-router.get('/', userController.getAllUsers); // à l'accueil récupère tous mes utilisateurs
+router.get('/', getAllReports); // à l'accueil récupère tous mes utilisateurs
 
-module.exports = router;
+router.post('/', addReport); // à l'accueil récupère tous mes utilisateurs
+
+export default router;
