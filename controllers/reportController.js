@@ -1,11 +1,11 @@
 import reportModel from '../models/reportModel.js';
 
-export async function getAllReports(req, res) {
+export const allReports = async (req, res) => {
 	const reports = await reportModel.find();
 	res.status(200).json({ reports });
-}
+};
 
-export async function addReport(req, res) {
+export const addReport = async (req, res) => {
 	const { title, description, image, latitude, longitude, address, category, user } = req.body; //faire des ifs pour vérifier que les champs sont remplis
 
 	const newReport = new reportModel({
@@ -22,4 +22,4 @@ export async function addReport(req, res) {
 
 	await newReport.save();
 	res.status(200).json({ newReport });
-}
+};
