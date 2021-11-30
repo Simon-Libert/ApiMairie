@@ -74,6 +74,9 @@ const reportSchema = new mongoose.Schema(
 		video: {
 			type: String,
 		},
+		image: {
+			type: String,
+		},
 	},
 	{
 		timestamps: true,
