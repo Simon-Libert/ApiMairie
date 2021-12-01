@@ -17,7 +17,7 @@ const reportSchema = new mongoose.Schema(
 			type: Date,
 			required: true,
 		},
-		hours: {
+		time: {
 			type: String,
 			required: true,
 		},

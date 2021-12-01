@@ -20,4 +20,5 @@ const start = async () => {
 start();
 
 //routes
+app.use(express.json());
 app.use('/api/v1/reports', reportRoutes);
