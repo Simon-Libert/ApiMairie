@@ -1,5 +1,5 @@
 import reportModel from '../models/reportModel.js';
-import mongoose from 'mongoose';
+
 import { StatusCodes } from 'http-status-codes';
 
 export const allReports = async (req, res) => {
@@ -23,11 +23,14 @@ export const addReport = async (req, res) => {
 		userAdress,
 		postCode,
 		city,
+		email,
 		phone,
+		image,
+		video,
 	} = req.body;
 
 	try {
-		const newReport = new reportModel({
+		const newReport = await reportModel.create({
 			//faire un try catch
 			type,
 			description,
@@ -39,10 +42,13 @@ export const addReport = async (req, res) => {
 			userAdress,
 			postCode,
 			city,
+			email,
 			phone,
+			image,
+			video,
 		});
 
-		await newReport.save();
+		newReport.save();
 		res.status(200).json({ newReport });
 	} catch (error) {
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });

@@ -1,8 +1,8 @@
-import dotenv from 'dotenv';
+/* import dotenv from 'dotenv';
 dotenv.config();
 
 import fs from 'fs';
-import upload from '../utils/multer.js';
+import upload from './multer.js';
 import { v2 as cloudinary } from 'cloudinary';
 
 export const uploadImage = (req, res, next) => {
@@ -32,4 +32,17 @@ export const uploadImage = (req, res, next) => {
 			return res.status(409).send(error);
 		}
 	});
-};
+}; */
+
+// essai 2.0
+/* import dotenv from 'dotenv';
+dotenv.config(); */
+import { v2 as cloudinary } from 'cloudinary';
+
+cloudinary.config({
+	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+	api_key: process.env.CLOUDINARY_API_KEY,
+	api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+export default cloudinary;

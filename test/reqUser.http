@@ -1,0 +1,37 @@
+### Variables
+#@baseUrl = https://bastienrc-apiauth.herokuapp.com
+@baseUrl = http://localhost:3500/api/v1/reports
+
+
+@email = essai006@gmail.fr
+
+
+### post alert
+POST {{baseUrl}}/ HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "{{email}}"
+}
+
+
+
+
+
+
+### post image
+POST {{baseUrl}}/ HTTP/1.1
+
+Content-Type: application/json
+
+{
+  "email": "{{email}}"
+}
+
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+Content-Disposition: form-data; name="image"; filename="jojo.jpg"
+Content-Type: image/jpg
+
+< ./jojo.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
