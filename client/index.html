@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
-		<form action="" method="post" class="report-form">
+		<form action="" method="post" class="report-form" enctype="multipart/form-data">
 			<div>
 				<label for="typeReport">Type d'alerte</label>
 
@@ -77,7 +77,7 @@
 				<label for="phoneNumber">Enter your phone number: </label>
 				<input type="text" name="name" id="phone" required />
 			</div>
-			<input type="file" title="Choose a file to upload" accept="image/*" autofocus="1">
+			<input type="file" title="Choose a file to upload" accept="image/*" autofocus="1" name="uploaded_file">
 			<div class="report-form">
 				<input type="submit" value="Validez!" />
 			</div>

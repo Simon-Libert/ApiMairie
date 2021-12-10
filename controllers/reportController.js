@@ -54,11 +54,3 @@ export const addReport = async (req, res) => {
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
 	}
 };
-
-/* Récupération du path temporaire du fichier ;
-2 : Stocké l'image dans cloudinary ;
-3 : Récupérer le path de l'image dans cloudinary ;
-4 : Instancier un nouveau reportModel ;
-5 : Injecter les données du body dans le model (sauf file) + path récupéré par le cloudinary dans la propriété image
-6 : save le model;
-7 : Retourner un rendu à ta vue */

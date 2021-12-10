@@ -35,14 +35,26 @@ export const uploadImage = (req, res, next) => {
 }; */
 
 // essai 2.0
-/* import dotenv from 'dotenv';
-dotenv.config(); */
+import dotenv from 'dotenv';
+dotenv.config();
 import { v2 as cloudinary } from 'cloudinary';
+import multer from 'multer';
+
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
 
 cloudinary.config({
 	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
 	api_key: process.env.CLOUDINARY_API_KEY,
 	api_secret: process.env.CLOUDINARY_API_SECRET,
+	secure: true,
 });
 
-export default cloudinary;
+const storage = new CloudinaryStorage({
+	cloudinary: cloudinary,
+	folder: 'images',
+	allowedFormats: ['jpg', 'png', 'jpeg'],
+	transformation: [{ width: 500, height: 500, crop: 'limit' }],
+});
+const parser = multer({ storage: storage });
+
+export default parser;
