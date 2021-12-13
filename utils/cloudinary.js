@@ -38,8 +38,6 @@ export const uploadImage = (req, res, next) => {
 import dotenv from 'dotenv';
 dotenv.config();
 import { v2 as cloudinary } from 'cloudinary';
-import multer from 'multer';
-
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
 
 cloudinary.config({
@@ -49,12 +47,19 @@ cloudinary.config({
 	secure: true,
 });
 
-const storage = new CloudinaryStorage({
-	cloudinary: cloudinary,
-	folder: 'images',
-	allowedFormats: ['jpg', 'png', 'jpeg'],
-	transformation: [{ width: 500, height: 500, crop: 'limit' }],
-});
-const parser = multer({ storage: storage });
+const photos = (file, folder) => {
+	return new Promise((resolve) => {
+		cloudinary.uploader.upload(
+			file,
+			(result) => {
+				resolve({
+					url: result.url,
+					id: result.public_id,
+				});
+			},
+			{ resource_type: 'auto', folder: folder }
+		);
+	});
+};
 
-export default parser;
+export default photos;

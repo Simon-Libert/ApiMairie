@@ -11,6 +11,23 @@ export const allReports = async (req, res) => {
 	}
 };
 
+export const uploadImage = async (req, res) => {
+	try {
+		const result = await cloudinary.v2.uploader.upload(req.file.path);
+
+		let user = new User({
+			name: req.body.name,
+			avatar: result.secure_url,
+			cloudinary_id: result.public_id,
+		});
+
+		await user.save();
+		res.json(user);
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 export const addReport = async (req, res) => {
 	const {
 		type,
