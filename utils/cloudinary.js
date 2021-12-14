@@ -60,13 +60,14 @@ const uploadImage = (req, res, next) => {
 		}
 
 		// SEND FILE TO CLOUDINARY
+		const { path } = req.file; // file becomes available in req at this point
 		try {
-			const { path } = req.file; // file becomes available in req at this point
 			const result = await cloudinary.uploader.upload(path, {
 				upload_preset: 'apimairie',
 				resource_type: 'image',
 			});
 			console.log(result);
+			req.body.image = result.secure_url; // on crée dans l'objet body un champ image qui contient l'url de l'image
 			fs.unlinkSync(path); // delete file from server
 			next();
 		} catch (error) {
