@@ -6,13 +6,11 @@ import { Router } from 'express';
 import { allReports, addReport } from '../controllers/reportController.js';
 const router = Router();
 
-import cloudinary from '../utils/cloudinary.js';
-
-import upload from '../utils/multer.js';
+import uploadImage from '../utils/cloudinary.js';
 
 router.get('/', allReports); // à l'accueil récupère tous mes utilisateurs
 
 // à l'accueil récupère tous mes utilisateurs
-router.post('/', upload.single('image'), addReport);
+router.post('/', uploadImage, addReport);
 
 export default router;

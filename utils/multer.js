@@ -16,23 +16,23 @@
 import multer from 'multer';
 
 const storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, 'photos/');
-	},
 	filename: function (req, file, cb) {
 		const ext = file.originalname.split('.')[1]; // récupérer l'extension du fichier
 		const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9) + '.' + ext;
 		cb(null, file.fieldname + '-' + uniqueSuffix);
 	},
-	filefilter: function (req, file, cb) {
-		if (!file.mimetype.match(/(jpg||jpeg||png||gif)$i/)) {
-			cb(new Error('Seul le format image est supporté.'), false);
-			return;
-		}
-		cb(null, true);
-	},
 });
 
-const upload = multer({ storage: storage });
+const fileFilter = (req, file, cb) => {
+	console.log(file);
+	const filetypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'];
+	if (filetypes.includes(file.mimetype)) {
+		cb(null, true);
+	} else {
+		cb(new Error('Seul le format image est supporté.'), false);
+	}
+};
 
-export default upload;
+const upload = multer({ storage, limits: { fileSize: 1024 * 1024 * 5 }, fileFilter });
+
+export default upload.single('image');

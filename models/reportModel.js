@@ -75,9 +75,7 @@ const reportSchema = new mongoose.Schema(
 			type: String,
 		},
 		image: {
-			type: String,
-		},
-		cloudinary_id: {
+			default: '',
 			type: String,
 		},
 	},

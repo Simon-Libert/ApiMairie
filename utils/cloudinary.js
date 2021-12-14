@@ -37,29 +37,42 @@ export const uploadImage = (req, res, next) => {
 // essai 2.0
 import dotenv from 'dotenv';
 dotenv.config();
+import multer from '../utils/multer.js';
 import { v2 as cloudinary } from 'cloudinary';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import fs from 'fs';
 
-cloudinary.config({
-	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-	api_key: process.env.CLOUDINARY_API_KEY,
-	api_secret: process.env.CLOUDINARY_API_SECRET,
-	secure: true,
-});
+const uploadImage = (req, res, next) => {
+	// upload to cloudinary
+	multer(req, res, async (err) => {
+		if (err) {
+			console.log(err);
+			return res.send(err);
+		}
 
-const photos = (file, folder) => {
-	return new Promise((resolve) => {
-		cloudinary.uploader.upload(
-			file,
-			(result) => {
-				resolve({
-					url: result.url,
-					id: result.public_id,
-				});
-			},
-			{ resource_type: 'auto', folder: folder }
-		);
+		cloudinary.config({
+			cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+			api_key: process.env.CLOUDINARY_API_KEY,
+			api_secret: process.env.CLOUDINARY_API_SECRET,
+		});
+
+		if (!req.file) {
+			return next();
+		}
+
+		// SEND FILE TO CLOUDINARY
+		try {
+			const { path } = req.file; // file becomes available in req at this point
+			const result = await cloudinary.uploader.upload(path, {
+				upload_preset: 'apimairie',
+				resource_type: 'image',
+			});
+			console.log(result);
+			fs.unlinkSync(path); // delete file from server
+			next();
+		} catch (error) {
+			return res.status(409).send(error);
+		}
 	});
 };
 
-export default photos;
+export default uploadImage;
