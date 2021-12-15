@@ -61,7 +61,7 @@ const reportSchema = new mongoose.Schema(
 			type: String,
 			//required: true,
 			minimum: [10, 'Le numéro de téléphone doit contenir au moins 10 chiffres'],
-			maximum: [10, 'Le numéro de téléphone ne doit pas dépasser 13 chiffres'],
+			maximum: [10, 'Le numéro de téléphone ne doit pas dépasser 10 chiffres'],
 		},
 		email: {
 			type: String,
