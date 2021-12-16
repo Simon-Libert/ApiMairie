@@ -1,18 +1,3 @@
-//essai 2.0
-/* export default multer({
-	storage: multer.diskStorage({}),
-	fileFilter: (req, file, cb) => {
-		if (!file.mimetype.match(/(jpg||jpeg||png||gif)$i/)) {
-			cb(new Error('Seul le format image est supporté.'), false);
-			return;
-		}
-		cb(null, true);
-	},
-}); */
-
-// multer config pour imports img
-//Get the file name and extension with multer
-
 import multer from 'multer';
 
 const storage = multer.diskStorage({
