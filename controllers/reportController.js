@@ -81,7 +81,9 @@ export const addReport = async (req, res) => {
 				<li>Ville: ${city}</li>
 				<li>Email: ${email}</li>
 				<li>Téléphone: ${phone}</li>
+				<li>Type de requête: ${type}</li>
 				<li>Description: ${description}</li>
+				<li>alertAddress: ${alertAddress}</li>
 				<li>Date: ${date}</li>
 				<li>Heure: ${time}</li>
 				<li>Image: ${image}</li>
