@@ -15,8 +15,8 @@ export default (to, subject, message) => {
 	// send mail with defined transport object
 	let info = transporter.sendMail({
 		from: process.env.EMAIL_HOST_USER,
-		to: process.env.EMAIL_USER_ADMIN_TEST, // list of receivers
-		subject: 'Alerte', // Subject line
+		to: process.env.EMAIL_DEST_TEST, // list of receivers
+		subject: subject, // Subject line
 	});
 
 	console.log('Message envoyé.', info.messageId);
