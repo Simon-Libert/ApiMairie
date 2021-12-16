@@ -19,5 +19,5 @@ export default (to, subject, message) => {
 		subject: 'Alerte', // Subject line
 	});
 
-	console.log('Message sent: %s', info.messageId);
+	console.log('Message envoyé.', info.messageId);
 };

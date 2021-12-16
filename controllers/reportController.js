@@ -73,6 +73,7 @@ export const addReport = async (req, res) => {
 			`
 				<p>Vous avez une nouvelle requête</p>
 				<h3> Contenu de la requête: </h3>
+				<ul>
 				<li>Nom: ${lastName}</li>
 				<li>Prénom: ${firstName}</li>
 				<li>Adresse:${userAddress}</li>
@@ -85,6 +86,7 @@ export const addReport = async (req, res) => {
 				<li>Heure: ${time}</li>
 				<li>Image: ${image}</li>
 				<li>Video: ${video}</li>
+				</ul>
 			`
 		);
 
