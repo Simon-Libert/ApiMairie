@@ -24,7 +24,7 @@ const reportSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		alertAdress: {
+		alertAddress: {
 			type: String,
 			trim: true,
 			required: true,
@@ -45,7 +45,7 @@ const reportSchema = new mongoose.Schema(
 			minlength: [2, "Le nom d'utilisateur doit contenir au moins 2 caractères"],
 			maxlength: [50, "Le nom d'utilisateur ne doit pas dépasser 50 caractères"],
 		},
-		userAdress: {
+		userAddress: {
 			type: String,
 			trim: true,
 			required: true,

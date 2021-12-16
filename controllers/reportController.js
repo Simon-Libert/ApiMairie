@@ -19,10 +19,10 @@ export const addReport = async (req, res) => {
 		description,
 		date,
 		time,
-		alertAdress,
+		alertAddress,
 		lastName,
 		firstName,
-		userAdress,
+		userAddress,
 		postCode,
 		city,
 		email,
@@ -38,10 +38,10 @@ export const addReport = async (req, res) => {
 			description,
 			date,
 			time,
-			alertAdress,
+			alertAddress,
 			lastName,
 			firstName,
-			userAdress,
+			userAddress,
 			postCode,
 			city,
 			email,
@@ -75,7 +75,7 @@ export const addReport = async (req, res) => {
 				<h3> Contenu de la requête: </h3>
 				<li>Nom: ${lastName}</li>
 				<li>Prénom: ${firstName}</li>
-				<li>Adresse:${userAdress}</li>
+				<li>Adresse:${userAddress}</li>
 				<li>Code Postale: ${postCode}</li>
 				<li>Ville: ${city}</li>
 				<li>Email: ${email}</li>

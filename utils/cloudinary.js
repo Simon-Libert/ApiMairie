@@ -8,7 +8,6 @@ const uploadImage = (req, res, next) => {
 	// upload to cloudinary
 	multer(req, res, async (err) => {
 		if (err) {
-			console.log(err);
 			return res.send(err);
 		}
 
@@ -29,7 +28,6 @@ const uploadImage = (req, res, next) => {
 				upload_preset: 'apimairie',
 				resource_type: 'image',
 			});
-			console.log(result);
 			req.body.image = result.secure_url; // on crée dans l'objet body un champ image qui contient l'url de l'image
 			fs.unlinkSync(path); // delete file from server
 			next();
