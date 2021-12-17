@@ -1,5 +1,8 @@
 import nodemailer from 'nodemailer';
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 // create reusable transporter object using the default SMTP transport
 export default (to, subject, message) => {
 	let transporter = nodemailer.createTransport({
@@ -10,14 +13,25 @@ export default (to, subject, message) => {
 			user: process.env.EMAIL_HOST_USER, // generated ethereal user
 			pass: process.env.EMAIL_HOST_PASSWORD, // generated ethereal password
 		},
+		tls: {
+			rejectUnauthorized: false,
+		},
 	});
 
 	// send mail with defined transport object
-	let info = transporter.sendMail({
+	let mailOptions = {
 		from: process.env.EMAIL_HOST_USER,
 		to: process.env.EMAIL_DEST_TEST, // list of receivers
-		subject: subject, // Subject line
-	});
+		subject: subject,
+		html: message,
 
-	console.log('Message envoyé.', info.messageId);
+		// Subject line
+	};
+
+	transporter.sendMail(mailOptions, (error, info) => {
+		if (error) {
+			return console.log(error);
+		}
+		console.log('Message envoyé.', info.messageId);
+	});
 };
