@@ -7,7 +7,7 @@ import { Strategy } from 'passport-local';
 import userModel from '../models/userModel.js';
 
 import JWT from 'passport-jwt';
-const { Strategy: JWTStrategy, ExtractJwt } = JWT;
+const { Strategy: JWTStrategy, ExtractJwt } = JWT; // le : permet de changer le nom strategy qui existe déjà
 
 passport.use(
 	'signUp',
@@ -15,11 +15,11 @@ passport.use(
 		{
 			usernameField: 'email',
 			passwordField: 'password',
-			passReqToCallback: true,
+			passReqToCallback: true, // passe la req dans la fonction de callback
 		},
 		async (req, email, password, done) => {
 			try {
-				const user = await userModel.create({ name: req.body.name, email, password });
+				const user = await userModel.create({ ...req.body });
 				return done(null, user);
 			} catch (error) {
 				return done(error);
@@ -38,12 +38,12 @@ passport.use(
 		async (email, password, done) => {
 			try {
 				const user = await userModel.findOne({ email });
-				if (!user) return done(null, false);
+				if (!user) return done(null, false, { message: 'Utilisateur non trouvé.' });
 
-				const isMatch = await user.matchPassword(password);
-				if (!isMatch) return done(null, false);
+				const isMatch = await user.matchPassword(password); //on va chercher la méthode matchpassword qu'on a créé dans userModel.js
+				if (!isMatch) return done(null, false, { message: 'Erreur de connexion.' });
 
-				return done(null, user);
+				return done(null, user, { message: 'Connexion réussie.' });
 			} catch (error) {
 				return done(error);
 			}
@@ -61,7 +61,7 @@ passport.use(
 			try {
 				return done(null, xauthorization._id);
 			} catch (error) {
-				return done(error);
+				done(error);
 			}
 		}
 	)

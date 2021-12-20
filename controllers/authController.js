@@ -6,9 +6,10 @@ import mongoose from 'mongoose';
 const ObjectId = mongoose.Types.ObjectId;
 
 // Register
-export const signUp = (req, res, next) => {
-	passport.authenticate('signUp', async (err, user, info) => {
-		res.json({ message: 'Enregistrement réussi.', user: req.user });
+export const signUp = async (req, res, next) => {
+	res.json({
+		message: 'Enregistrement réussi.',
+		user: req.user,
 	});
 };
 
@@ -25,7 +26,7 @@ export const signIn = (req, res, next) => {
 
 				const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
 
-				res.send(token);
+				res.send({ token });
 			});
 		} catch (error) {
 			return next(error);
@@ -33,6 +34,80 @@ export const signIn = (req, res, next) => {
 	})(req, res, next);
 };
 
+// update
+export const updateUser = async (req, res) => {
+	if (!ObjectId.isValid(req.user))
+		return res.status(StatusCodes.BAD_REQUEST).send(`Invalid parameter : ${req.user}`);
+
+	const { name } = req.body;
+	try {
+		const user = await userModel.findById(req.user);
+		if (!user) return res.status(StatusCodes.NOT_FOUND).send('User not found');
+
+		let dataToUpdate = {};
+		if (name || (typeof name === 'string' && name === '')) dataToUpdate.name = name;
+
+		if (Object.keys(dataToUpdate).length > 0)
+			await userModel.findByIdAndUpdate(
+				req.user,
+				{ $set: dataToUpdate },
+				{ new: true, upsert: true, setDefaultsOnInsert: true }
+			);
+
+		res.status(StatusCodes.OK).send(user);
+	} catch (error) {
+		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
+	}
+};
+
+//password change
+export const changePassword = async (req, res) => {
+	if (!ObjectId.isValid(req.user))
+		return res.status(StatusCodes.BAD_REQUEST).send(`Invalid parameter : ${req.user}`);
+
+	const { oldPassword, newPassword } = req.body;
+
+	try {
+		const user = await userModel.findById(req.user);
+		if (!user) return res.status(StatusCodes.NOT_FOUND).send('User not found');
+
+		const isMatch = await user.matchPassword(oldPassword);
+		if (!isMatch) return res.status(StatusCodes.BAD_REQUEST).send('Old password is incorrect');
+
+		user.password = newPassword;
+		await user.save();
+
+		res.status(StatusCodes.OK).send('Password changed successfully');
+	} catch (error) {
+		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
+	}
+};
+
+// delete user
+export const deleteUser = async (req, res) => {
+	if (!ObjectId.isValid(req.user))
+		return res.status(StatusCodes.BAD_REQUEST).send(`Invalid parameter : ${req.user}`);
+
+	try {
+		const user = await userModel.findByIdAndDelete(req.user);
+		if (!user) return res.status(StatusCodes.NOT_FOUND).send('User not found');
+
+		if (user.picture && user.picture !== 'random-user.png')
+			await promises.unlink(`${__dirname}/../client/public/uploads/profile/${user.picture}`);
+
+		res.status(StatusCodes.NO_CONTENT).send();
+	} catch (error) {
+		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
+	}
+};
+
+//logout
+export const signOut = (req, res) => {
+	req.logout();
+	res.status(StatusCodes.OK).send();
+};
+
+// get user
 export const getMe = async (req, res) => {
 	console.log(req.user);
 	if (!ObjectId.isValid(req.user))
@@ -45,9 +120,4 @@ export const getMe = async (req, res) => {
 	} catch (error) {
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
 	}
-};
-
-export const signOut = (req, res) => {
-	req.logout();
-	res.status(StatusCodes.OK).send();
 };
