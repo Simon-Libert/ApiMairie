@@ -13,6 +13,15 @@ export const allReports = async (req, res) => {
 	}
 };
 
+export const oneReportPerCitizen = async (req, res) => {
+	try {
+		const report = await reportModel.find({ firstName: req.params.firstName });
+		res.status(200).json({ report });
+	} catch (error) {
+		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
+	}
+};
+
 export const addReport = async (req, res) => {
 	const {
 		type,

@@ -39,22 +39,12 @@ export const updateUser = async (req, res) => {
 	if (!ObjectId.isValid(req.user))
 		return res.status(StatusCodes.BAD_REQUEST).send(`Invalid parameter : ${req.user}`);
 
-	const { name } = req.body;
 	try {
-		const user = await userModel.findById(req.user);
+		const user = await userModel.findByIdAndUpdate(req.user);
 		if (!user) return res.status(StatusCodes.NOT_FOUND).send('User not found');
 
-		let dataToUpdate = {};
-		if (name || (typeof name === 'string' && name === '')) dataToUpdate.name = name;
-
-		if (Object.keys(dataToUpdate).length > 0)
-			await userModel.findByIdAndUpdate(
-				req.user,
-				{ $set: dataToUpdate },
-				{ new: true, upsert: true, setDefaultsOnInsert: true }
-			);
-
 		res.status(StatusCodes.OK).send(user);
+		user.save();
 	} catch (error) {
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
 	}
@@ -90,12 +80,9 @@ export const deleteUser = async (req, res) => {
 
 	try {
 		const user = await userModel.findByIdAndDelete(req.user);
-		if (!user) return res.status(StatusCodes.NOT_FOUND).send('User not found');
+		if (!user) return res.status(StatusCodes.NOT_FOUND).send('Utilisateur non trouvé');
 
-		if (user.picture && user.picture !== 'random-user.png')
-			await promises.unlink(`${__dirname}/../client/public/uploads/profile/${user.picture}`);
-
-		res.status(StatusCodes.NO_CONTENT).send();
+		res.status(StatusCodes.OK).send('Utilisateur supprimé.');
 	} catch (error) {
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
 	}
@@ -104,7 +91,7 @@ export const deleteUser = async (req, res) => {
 //logout
 export const signOut = (req, res) => {
 	req.logout();
-	res.status(StatusCodes.OK).send();
+	res.status(StatusCodes.OK).send('Utilisateur déconnecté.');
 };
 
 // get user
