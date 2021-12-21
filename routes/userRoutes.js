@@ -6,7 +6,6 @@ import {
 	signUp,
 	signIn,
 	updateUser,
-	changePassword,
 	deleteUser,
 	getMe,
 	signOut,
@@ -21,9 +20,6 @@ router.post('/login', passport.authenticate('signIn', { session: false }), signI
 
 // http://localhost:3500/api/v1/users/update
 router.put('/update', passport.authenticate('jwt', { session: false }), updateUser);
-
-// http://localhost:3500/api/v1/users/change-password
-router.post('/change-password', passport.authenticate('jwt', { session: false }), changePassword);
 
 // http://localhost:3500/api/v1/users/delete
 router.delete('/delete', passport.authenticate('jwt', { session: false }), deleteUser);

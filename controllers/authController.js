@@ -50,29 +50,6 @@ export const updateUser = async (req, res) => {
 	}
 };
 
-//password change
-export const changePassword = async (req, res) => {
-	if (!ObjectId.isValid(req.user))
-		return res.status(StatusCodes.BAD_REQUEST).send(`Invalid parameter : ${req.user}`);
-
-	const { oldPassword, newPassword } = req.body;
-
-	try {
-		const user = await userModel.findById(req.user);
-		if (!user) return res.status(StatusCodes.NOT_FOUND).send('User not found');
-
-		const isMatch = await user.matchPassword(oldPassword);
-		if (!isMatch) return res.status(StatusCodes.BAD_REQUEST).send('Old password is incorrect');
-
-		user.password = newPassword;
-		await user.save();
-
-		res.status(StatusCodes.OK).send('Password changed successfully');
-	} catch (error) {
-		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
-	}
-};
-
 // delete user
 export const deleteUser = async (req, res) => {
 	if (!ObjectId.isValid(req.user))

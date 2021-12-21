@@ -28,6 +28,14 @@ APP_PORT = 3500
 
 MONGO_URI = "mongodb+srv://<username>:<password>@<clusterName>.pqmeh.mongodb.net/<databaseName>?retryWrites=true&w=majority"
 
+# Secret JWT Key & Lifetime
+JWT_SECRET = "SECRET_KEY"
+# JWT LIFETIME of <time> hours in milliseconds
+JWT_LIFETIME = 0
+
+# SALT for password hashing
+SALT = 10
+
 EMAIL_HOST = "smtp-mail.exemple.com"
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "user_email_adress"
@@ -37,6 +45,8 @@ EMAIL_USER_ADMIN_TEST = "user_email_admin_adress"
 CLOUDINARY_CLOUD_NAME = 'user_name'
 CLOUDINARY_API_KEY = 'secret_key'
 CLOUDINARY_API_SECRET = 'secret_key'
+
+
 ```
 
 ## Test avec Insomnia
@@ -51,13 +61,266 @@ Ou copiez le texte JSON ci-dessous et collez-le dans la barre URL d'Insomnia :
 {
 	"_type": "export",
 	"__export_format": 4,
-	"__export_date": "2021-12-16T15:20:19.486Z",
+	"__export_date": "2021-12-21T15:34:18.691Z",
 	"__export_source": "insomnia.desktop.app:v2021.7.2",
 	"resources": [
 		{
+			"_id": "req_dd087a5af91545fabbc2cec0705ab8d6",
+			"parentId": "fld_59dd3e6524234ce397b020f603830a9b",
+			"modified": 1640100634400,
+			"created": 1639736032931,
+			"url": "http://localhost:3500/api/v1/users/register",
+			"name": "UserSignUp",
+			"description": "",
+			"method": "POST",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"lastName\": \"Simon\",\n\t\"firstName\": \"Cussonnait\",\n\t\"userAddress\": \"12 rue de l'horloge sale\",\n\t\"postCode\": \"62100\",\n\t\"city\": \"lheureestgrave\",\n\t\"email\": \"simon@ducon.fr\",\n\t\"phone\": \"0612343445\",\n\t\"password\": \"123!\"\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json",
+					"id": "pair_78e3c072b5094bce91ae17c41f8f2c93"
+				}
+			],
+			"authentication": {},
+			"metaSortKey": -1639729736675,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global",
+			"_type": "request"
+		},
+		{
+			"_id": "fld_59dd3e6524234ce397b020f603830a9b",
+			"parentId": "wrk_648ed6de5d8e4e078b848b6ea35acf61",
+			"modified": 1638875163003,
+			"created": 1638875163003,
+			"name": "ApiMairie",
+			"description": "",
+			"environment": {},
+			"environmentPropertyOrder": null,
+			"metaSortKey": -1638875163003,
+			"_type": "request_group"
+		},
+		{
+			"_id": "wrk_648ed6de5d8e4e078b848b6ea35acf61",
+			"parentId": null,
+			"modified": 1639651094468,
+			"created": 1636472575732,
+			"name": "api mairie requête post",
+			"description": "",
+			"scope": "collection",
+			"_type": "workspace"
+		},
+		{
+			"_id": "req_ca62205564484df1b33066e138380e6e",
+			"parentId": "fld_59dd3e6524234ce397b020f603830a9b",
+			"modified": 1640100414023,
+			"created": 1639729569780,
+			"url": "http://localhost:3500/api/v1/users/login",
+			"name": "userLogin",
+			"description": "",
+			"method": "POST",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"email\": \"simon@joie.fr\",\n\t\"password\": \"1234!\"\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json",
+					"id": "pair_78e3c072b5094bce91ae17c41f8f2c93"
+				}
+			],
+			"authentication": { "type": "bearer", "token": "", "disabled": false },
+			"metaSortKey": -1639729736662.5,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global",
+			"_type": "request"
+		},
+		{
+			"_id": "req_5fcd3e2ae7624b60af28f215347caa07",
+			"parentId": "fld_59dd3e6524234ce397b020f603830a9b",
+			"modified": 1640100553083,
+			"created": 1639729690784,
+			"url": "http://localhost:3500/api/v1/users/update",
+			"name": "updateUser",
+			"description": "",
+			"method": "PUT",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\n\t\"lastName\": \"simone\"\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json",
+					"id": "pair_750dd71dcf184541b5805b342438f78c"
+				}
+			],
+			"authentication": {
+				"type": "bearer",
+				"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWMxZGEzOWJhNWNkYjE1MjBhZGI3ZGIiLCJpYXQiOjE2NDAwOTQzMTF9.5fMnWKiQ8xnpLdplj-Z5k9A69b-HjFUDdlHhE97HYJA",
+				"prefix": ""
+			},
+			"metaSortKey": -1639729736650,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global",
+			"_type": "request"
+		},
+		{
+			"_id": "req_6db448de5b4b41a39a54f1acd2021ea9",
+			"parentId": "fld_59dd3e6524234ce397b020f603830a9b",
+			"modified": 1640099763964,
+			"created": 1639729636060,
+			"url": "http://localhost:3500/api/v1/users/delete",
+			"name": "delete user",
+			"description": "",
+			"method": "DELETE",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"_id\": \"61c0610c78cb84023ef95a96\",\n\t\"email\": \"bob@plop.fr\",\n\t\"password\": \"bobquifaitdespizza12!\"\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json",
+					"id": "pair_2f1c1608a40e482ba28d94970c3809f8"
+				}
+			],
+			"authentication": {
+				"type": "bearer",
+				"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWMwNjEwYzc4Y2I4NDAyM2VmOTVhOTYiLCJpYXQiOjE2NDAwMDIzODh9.pcL__S2t3vd-He7VoN_MfaWma5g7DkIpYdDt_7RGd_Y"
+			},
+			"metaSortKey": -1639729736637.5,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global",
+			"_type": "request"
+		},
+		{
+			"_id": "req_6922292fb7de465db00534b150640f25",
+			"parentId": "fld_59dd3e6524234ce397b020f603830a9b",
+			"modified": 1640100354549,
+			"created": 1640005428188,
+			"url": "http://localhost:3500/api/v1/users/logout",
+			"name": "user logout",
+			"description": "",
+			"method": "GET",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"email\": \"simon@ducon.fr\",\n\t\"password\": \"123!\"\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json",
+					"id": "pair_35d53569ac5a4bc38551a55f0fad737e"
+				}
+			],
+			"authentication": {
+				"type": "bearer",
+				"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWMwNjEwYzc4Y2I4NDAyM2VmOTVhOTYiLCJpYXQiOjE2NDAwMDIzODh9.pcL__S2t3vd-He7VoN_MfaWma5g7DkIpYdDt_7RGd_Y"
+			},
+			"metaSortKey": -1639729736631.25,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global",
+			"_type": "request"
+		},
+		{
+			"_id": "req_8909a76a443a439680f2d4af94dc4300",
+			"parentId": "fld_59dd3e6524234ce397b020f603830a9b",
+			"modified": 1640099768398,
+			"created": 1639729736625,
+			"url": "http://localhost:3500/api/v1/users/me",
+			"name": "get one user",
+			"description": "",
+			"method": "GET",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"_id\": \"61bb151cb9289d8449a8d4d1\"\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json",
+					"id": "pair_590805a40db34c82805c662da87778d2"
+				}
+			],
+			"authentication": {
+				"type": "bearer",
+				"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWMwYjA2MDc0MDkyZjQ4YTZjNWI5ZDMiLCJpYXQiOjE2NDAwODc3NDJ9.1E2LuSbfPz5Llra_R-1vhDxzJhhUlLV2nnUqiSkX4Nk"
+			},
+			"metaSortKey": -1639729736625,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global",
+			"_type": "request"
+		},
+		{
+			"_id": "req_730a75a1169043b1bc35644128d40eb7",
+			"parentId": "fld_59dd3e6524234ce397b020f603830a9b",
+			"modified": 1640092045493,
+			"created": 1639729593639,
+			"url": "http://localhost:3500/api/v1/reports",
+			"name": "get allUsers",
+			"description": "",
+			"method": "GET",
+			"body": {},
+			"parameters": [],
+			"headers": [],
+			"authentication": {
+				"type": "bearer",
+				"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWMwYjA2MDc0MDkyZjQ4YTZjNWI5ZDMiLCJpYXQiOjE2NDAwODc3NDJ9.1E2LuSbfPz5Llra_R-1vhDxzJhhUlLV2nnUqiSkX4Nk"
+			},
+			"metaSortKey": -1639729725164.75,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global",
+			"_type": "request"
+		},
+		{
 			"_id": "req_1540524b1e9f4b1ba914633162bd199b",
 			"parentId": "fld_59dd3e6524234ce397b020f603830a9b",
-			"modified": 1639666573797,
+			"modified": 1640079254996,
 			"created": 1638875189726,
 			"url": "    http://localhost:3500/api/v1/reports",
 			"name": "Add reports",
@@ -167,7 +430,7 @@ Ou copiez le texte JSON ci-dessous et collez-le dans la barre URL d'Insomnia :
 				}
 			],
 			"authentication": {},
-			"metaSortKey": -1638875189726,
+			"metaSortKey": -1639729719434.625,
 			"isPrivate": false,
 			"settingStoreCookies": true,
 			"settingSendCookies": true,
@@ -178,26 +441,59 @@ Ou copiez le texte JSON ci-dessous et collez-le dans la barre URL d'Insomnia :
 			"_type": "request"
 		},
 		{
-			"_id": "fld_59dd3e6524234ce397b020f603830a9b",
-			"parentId": "wrk_648ed6de5d8e4e078b848b6ea35acf61",
-			"modified": 1638875163003,
-			"created": 1638875163003,
-			"name": "ApiMairie",
+			"_id": "req_ac9c5d6fe10145c39d6e870783078ef0",
+			"parentId": "fld_59dd3e6524234ce397b020f603830a9b",
+			"modified": 1640099778329,
+			"created": 1640092198001,
+			"url": "http://localhost:3500/api/v1/reports/:firstName",
+			"name": "get one report",
 			"description": "",
-			"environment": {},
-			"environmentPropertyOrder": null,
-			"metaSortKey": -1638875163003,
-			"_type": "request_group"
+			"method": "GET",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"firstName\": \"Jean de la Rosette de Robespierre\"\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json",
+					"id": "pair_630500077c4b43ec91299964bc758355"
+				}
+			],
+			"authentication": {},
+			"metaSortKey": -1639409252087.0625,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global",
+			"_type": "request"
 		},
 		{
-			"_id": "wrk_648ed6de5d8e4e078b848b6ea35acf61",
-			"parentId": null,
-			"modified": 1639651094468,
-			"created": 1636472575732,
-			"name": "api mairie requête post",
+			"_id": "req_3f09c610cfc64415bf06f6f681a1b1df",
+			"parentId": "fld_59dd3e6524234ce397b020f603830a9b",
+			"modified": 1639738683742,
+			"created": 1639738599206,
+			"url": "http://localhost:3500/api/v1/reports",
+			"name": "getAllReports",
 			"description": "",
-			"scope": "collection",
-			"_type": "workspace"
+			"method": "GET",
+			"body": {},
+			"parameters": [],
+			"headers": [],
+			"authentication": {},
+			"metaSortKey": -1639088784739.5,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global",
+			"_type": "request"
 		},
 		{
 			"_id": "env_0cb9f0d05c313905e2d9f127d0108d0e055ddcbe",
@@ -215,10 +511,22 @@ Ou copiez le texte JSON ci-dessous et collez-le dans la barre URL d'Insomnia :
 		{
 			"_id": "jar_0cb9f0d05c313905e2d9f127d0108d0e055ddcbe",
 			"parentId": "wrk_648ed6de5d8e4e078b848b6ea35acf61",
-			"modified": 1636472575738,
+			"modified": 1640099724803,
 			"created": 1636472575738,
 			"name": "Default Jar",
-			"cookies": [],
+			"cookies": [
+				{
+					"key": "connect.sid",
+					"value": "s%3A5bNYd9sMlIZYza_7dVkNLp59-iMAf9fx.95XpbPutZEdWywlctmBzlLuGN%2Fz75bHRd1Ofljbnnbk",
+					"domain": "localhost",
+					"path": "/",
+					"httpOnly": true,
+					"hostOnly": true,
+					"creation": "2021-12-17T10:54:01.397Z",
+					"lastAccessed": "2021-12-21T15:15:24.803Z",
+					"id": "35152175823207954"
+				}
+			],
 			"_type": "cookie_jar"
 		},
 		{
