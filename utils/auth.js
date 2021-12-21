@@ -55,11 +55,12 @@ passport.use(
 	new JWTStrategy(
 		{
 			secretOrKey: process.env.JWT_SECRET,
-			jwtFromRequest: ExtractJwt.fromHeader('xauthorization'),
+			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 		},
-		async (xauthorization, done) => {
+		async (token, done) => {
+			console.log(token);
 			try {
-				return done(null, xauthorization._id);
+				return done(null, token._id);
 			} catch (error) {
 				done(error);
 			}

@@ -20,7 +20,7 @@ export default (to, subject, message) => {
 
 	// send mail with defined transport object
 	let mailOptions = {
-		from: process.env.EMAIL_HOST_USER,
+		from: `"Mairie Simplonville" <${process.env.EMAIL_HOST_USER}>`, // sender address
 		to: process.env.EMAIL_DEST_TEST, // list of receivers
 		subject: subject,
 		html: message,
