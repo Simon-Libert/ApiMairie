@@ -7,9 +7,10 @@ import {
 	signIn,
 	updateUser,
 	deleteUser,
-	getMe,
+	getUser,
 	signOut,
 } from '../controllers/authController.js';
+
 const router = Router();
 
 // http://localhost:3500/api/v1/users/signup
@@ -28,6 +29,6 @@ router.delete('/delete', passport.authenticate('jwt', { session: false }), delet
 router.get('/logout', passport.authenticate('jwt', { session: false }), signOut);
 
 // http://localhost:3500/api/v1/users/me
-router.get('/me', passport.authenticate('jwt', { session: false }), getMe);
+router.get('/admin/:id', passport.authenticate('jwt', { session: false }), getUser);
 
 export default router;

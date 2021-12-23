@@ -39,6 +39,7 @@ const userSchema = new mongoose.Schema(
 			minimum: [2, 'Le code postal doit contenir au moins 2 caractères'],
 			maximum: [5, 'Le code postal ne doit pas dépasser 5 caractères'],
 		},
+
 		city: {
 			type: String,
 			trim: true,
@@ -46,6 +47,7 @@ const userSchema = new mongoose.Schema(
 			minlength: [2, 'Le nom de la ville doit contenir au moins 2 caractères'],
 			maxlength: [30, 'Le nom de la ville ne doit pas dépasser 30 caractères'],
 		},
+
 		phone: {
 			type: String,
 			trim: true,
@@ -64,6 +66,25 @@ const userSchema = new mongoose.Schema(
 				'Merci de fournir un email valide',
 			],
 			unique: true,
+		},
+
+		role: {
+			type: String,
+			required: true,
+			enum: ['citoyen', 'responsable', 'admin'],
+			default: 'citoyen',
+		},
+
+		status: {
+			type: String,
+			enum: ['todo', 'inProgress', 'done'],
+			default: 'todo',
+		},
+
+		service: {
+			type: String,
+			trim: true,
+			enum: ['Voirie', 'Stationnement', 'Travaux', 'Autre'],
 		},
 
 		password: {

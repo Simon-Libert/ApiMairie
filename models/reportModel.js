@@ -2,6 +2,16 @@ import mongoose from 'mongoose';
 
 const reportSchema = new mongoose.Schema(
 	{
+		ownerId: {
+			type: mongoose.Types.ObjectId,
+			ref: 'User',
+		},
+
+		status: {
+			type: String,
+			enum: ['En attente', 'En cours', 'Terminé'],
+		},
+
 		type: {
 			type: String,
 			required: true,
@@ -57,12 +67,10 @@ const reportSchema = new mongoose.Schema(
 		},
 		video: {
 			type: String,
-			trim: true,
 		},
 		image: {
 			default: '',
 			type: String,
-			trim: true,
 		},
 	},
 

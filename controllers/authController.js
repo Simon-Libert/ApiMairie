@@ -72,8 +72,7 @@ export const signOut = (req, res) => {
 };
 
 // get user
-export const getMe = async (req, res) => {
-	console.log(req.user);
+export const getUser = async (req, res) => {
 	if (!ObjectId.isValid(req.user))
 		return res.status(StatusCodes.BAD_REQUEST).send(`Invalid parameter : ${req.user}`);
 

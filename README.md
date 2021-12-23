@@ -2,6 +2,20 @@
 
 Api Mairie est une API qui gère les alertes, voiries, travaux, etc..., des citoyens d'une ville.
 
+Dedans, le citoyen peut :
+
+    - se créer un compte
+    - se connecter à son compte
+    - modifier ses informations de compte
+    - supprimer son compte
+    - envoyer un formulaire d'alerte avec une photo
+    - voir la liste de ses alertes
+    - supprimer ses alertes.
+
+Le responsable de service a les mêmes possibilités que le citoyen, mais peut en plus : - accèder à la base des données utilisateurs selon son service - accèder aux reports d'alerte qui correspondent à son service - noter l'avancement du traitement des alertes.
+
+L'administrateur a également tous les droits cités ci-dessus mais a en plus : - l'accès à toutes les données utilisateurs - le droit de déterminer des rôles aux responsables des différents services.
+
 ## Author
 
 Simon Libert <simon_libert@yahoo.fr>
@@ -51,11 +65,7 @@ CLOUDINARY_API_SECRET = 'secret_key'
 
 ## Test avec Insomnia
 
-Téléchargez l'application Insomnia. Cliquez sur le bouton ci-dessous.
-
-[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=api_mairie&uri=http%3A%2F%2Flocalhost%3A3500%2Fapi%2Fv1%2Freports)
-
-Ou copiez le texte JSON ci-dessous et collez-le dans la barre URL d'Insomnia :
+Téléchargez l'application Insomnia, copiez le texte JSON ci-dessous et collez-le dans la barre URL d'Insomnia :
 
 ```json
 {

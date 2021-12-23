@@ -4,6 +4,9 @@ import { StatusCodes } from 'http-status-codes';
 
 import sendMail from '../utils/sendMail.js';
 
+import mongoose from 'mongoose';
+const ObjectId = mongoose.Types.ObjectId;
+
 export const allReports = async (req, res) => {
 	try {
 		const reports = await reportModel.find();
@@ -13,10 +16,10 @@ export const allReports = async (req, res) => {
 	}
 };
 
-export const oneReportPerCitizen = async (req, res) => {
+export const allReportsFromUser = async (req, res) => {
 	try {
-		const report = await reportModel.find({ firstName: req.params.firstName });
-		res.status(200).json({ report });
+		const reports = await reportModel.find({ ownerId: req.params.id });
+		res.status(200).json({ reports });
 	} catch (error) {
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
 	}
@@ -24,6 +27,8 @@ export const oneReportPerCitizen = async (req, res) => {
 
 export const addReport = async (req, res) => {
 	const {
+		ownerId,
+		status,
 		type,
 		description,
 		date,
@@ -43,6 +48,8 @@ export const addReport = async (req, res) => {
 	try {
 		const newReport = await reportModel.create({
 			//faire un try catch
+			ownerId,
+			status,
 			type,
 			description,
 			date,
@@ -102,6 +109,34 @@ export const addReport = async (req, res) => {
 		);
 
 		res.status(200).json({ newReport });
+	} catch (error) {
+		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
+	}
+};
+
+export const updateReport = async (req, res) => {
+	if (!ObjectId.isValid(req.params.id))
+		return res.status(StatusCodes.BAD_REQUEST).send(`Invalid parameter : ${req.params.id}`);
+	try {
+		const updatedReport = {
+			status: req.body.status,
+		};
+		reportModel
+			.findByIdAndUpdate(req.params.id, { $set: updatedReport }, { new: true })
+			.then((report) => {
+				res.status(200).json({ report });
+			});
+	} catch (error) {
+		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
+	}
+};
+
+export const deleteReport = async (req, res) => {
+	if (!ObjectId.isValid(req.params.id))
+		return res.status(StatusCodes.BAD_REQUEST).send(`Invalid parameter : ${req.params.id}`);
+	try {
+		const report = await reportModel.findByIdAndDelete(req.params.id);
+		res.status(200).json({ report });
 	} catch (error) {
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
 	}
