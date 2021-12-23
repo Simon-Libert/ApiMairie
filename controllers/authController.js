@@ -73,11 +73,12 @@ export const signOut = (req, res) => {
 
 // get user
 export const getUser = async (req, res) => {
-	if (!ObjectId.isValid(req.user))
-		return res.status(StatusCodes.BAD_REQUEST).send(`Invalid parameter : ${req.user}`);
+	if (!ObjectId.isValid(req.params.id))
+		// req params va chercher les paramètres de l'url
+		return res.status(StatusCodes.BAD_REQUEST).send(`Invalid parameter : ${req.params.id}`);
 
 	try {
-		const user = await userModel.findById(req.user).select('-password -__v');
+		const user = await userModel.findById(req.params.id).select('-password -__v');
 		if (!user) return res.status(StatusCodes.BAD_REQUEST).send('User not found');
 		res.status(StatusCodes.OK).send(user);
 	} catch (error) {

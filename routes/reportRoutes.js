@@ -10,6 +10,7 @@ import {
 	updateReport,
 	allReportsFromUser,
 } from '../controllers/reportController.js';
+import { adminUser } from '../middlewares/admin.js';
 const router = Router();
 
 import uploadImage from '../utils/cloudinary.js';
@@ -20,8 +21,8 @@ router.get('/:id', allReportsFromUser);
 
 router.post('/', uploadImage, addReport);
 
-router.put('/:id', updateReport);
+router.put('/:id', adminUser(['admin']), updateReport);
 
-router.delete('/:id', deleteReport);
+router.delete('/:id', adminUser(['admin']), deleteReport);
 
 export default router;

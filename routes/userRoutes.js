@@ -10,6 +10,7 @@ import {
 	getUser,
 	signOut,
 } from '../controllers/authController.js';
+import { adminUser } from '../middlewares/admin.js';
 
 const router = Router();
 
@@ -28,7 +29,12 @@ router.delete('/delete', passport.authenticate('jwt', { session: false }), delet
 // http://localhost:3500/api/v1/users/logout
 router.get('/logout', passport.authenticate('jwt', { session: false }), signOut);
 
-// http://localhost:3500/api/v1/users/me
-router.get('/admin/:id', passport.authenticate('jwt', { session: false }), getUser);
+// http://localhost:3500/api/v1/users/admin/:id
+router.get(
+	'/admin/:id',
+	passport.authenticate('jwt', { session: false }),
+	adminUser(['admin']),
+	getUser
+);
 
 export default router;

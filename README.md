@@ -4,17 +4,21 @@ Api Mairie est une API qui gère les alertes, voiries, travaux, etc..., des cito
 
 Dedans, le citoyen peut :
 
-    - se créer un compte
-    - se connecter à son compte
-    - modifier ses informations de compte
-    - supprimer son compte
-    - envoyer un formulaire d'alerte avec une photo
-    - voir la liste de ses alertes
+    - se créer un compte,
+    - se connecter à son compte,
+    - modifier ses informations de compte,
+    - supprimer son compte,
+    - envoyer un formulaire d'alerte avec une photo,
+    - voir la liste de ses alertes,
     - supprimer ses alertes.
 
-Le responsable de service a les mêmes possibilités que le citoyen, mais peut en plus : - accèder à la base des données utilisateurs selon son service - accèder aux reports d'alerte qui correspondent à son service - noter l'avancement du traitement des alertes.
+Le responsable de service a les mêmes possibilités que le citoyen, mais peut en plus :
 
-L'administrateur a également tous les droits cités ci-dessus mais a en plus : - l'accès à toutes les données utilisateurs - le droit de déterminer des rôles aux responsables des différents services.
+    - accèder à la base des données utilisateurs,,
+    - accèder aux reports d'alertes,
+    - noter l'avancement du traitement des alertes.
+    - modifier le statut d'avancement du traitement de la requête,
+    - supprimer les reports en base de donnée.
 
 ## Author
 
