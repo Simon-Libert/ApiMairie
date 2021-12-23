@@ -17,7 +17,7 @@ import userRoutes from './routes/userRoutes.js';
 import './utils/auth.js';
 import passport from 'passport';
 
-const appPort = process.env.APP_PORT || 3500;
+const appPort = process.env.PORT || 3500;
 
 const start = async () => {
 	try {
