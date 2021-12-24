@@ -29,7 +29,7 @@ router.delete('/delete', passport.authenticate('jwt', { session: false }), delet
 // http://localhost:3500/api/v1/users/logout
 router.get('/logout', passport.authenticate('jwt', { session: false }), signOut);
 
-// http://localhost:3500/api/v1/users/admin/:id
+// http://localhost:3500/api/v1/users/admin/:userId
 router.get(
 	'/admin/:id',
 	passport.authenticate('jwt', { session: false }),

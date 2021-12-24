@@ -17,8 +17,10 @@ const router = Router();
 
 import uploadImage from '../utils/cloudinary.js';
 
+//http://localhost:3500/api/v1/reports
 router.get('/', passport.authenticate('jwt', { session: false }), adminUser(['admin']), allReports);
 
+//http://localhost:3500/api/v1/reports/:userId
 router.get(
 	'/:id',
 	passport.authenticate('jwt', { session: false }),
@@ -28,6 +30,7 @@ router.get(
 
 router.post('/', uploadImage, addReport);
 
+//http://localhost:3500/api/v1/reports/:reportsId
 router.put(
 	'/:id',
 	passport.authenticate('jwt', { session: false }),
@@ -35,6 +38,7 @@ router.put(
 	updateReport
 );
 
+//http://localhost:3500/api/v1/reports/:reportsId
 router.delete(
 	'/:id',
 	passport.authenticate('jwt', { session: false }),
