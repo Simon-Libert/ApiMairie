@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+import passport from 'passport';
+
 import { Router } from 'express';
 
 import {
@@ -15,14 +17,29 @@ const router = Router();
 
 import uploadImage from '../utils/cloudinary.js';
 
-router.get('/', allReports);
+router.get('/', passport.authenticate('jwt', { session: false }), adminUser(['admin']), allReports);
 
-router.get('/:id', allReportsFromUser);
+router.get(
+	'/:id',
+	passport.authenticate('jwt', { session: false }),
+	adminUser(['admin']),
+	allReportsFromUser
+);
 
 router.post('/', uploadImage, addReport);
 
-router.put('/:id', adminUser(['admin']), updateReport);
+router.put(
+	'/:id',
+	passport.authenticate('jwt', { session: false }),
+	adminUser(['admin']),
+	updateReport
+);
 
-router.delete('/:id', adminUser(['admin']), deleteReport);
+router.delete(
+	'/:id',
+	passport.authenticate('jwt', { session: false }),
+	adminUser(['admin']),
+	deleteReport
+);
 
 export default router;

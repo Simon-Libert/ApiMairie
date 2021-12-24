@@ -121,11 +121,16 @@ export const updateReport = async (req, res) => {
 		const updatedReport = {
 			status: req.body.status,
 		};
-		reportModel
-			.findByIdAndUpdate(req.params.id, { $set: updatedReport }, { new: true })
-			.then((report) => {
-				res.status(200).json({ report });
-			});
+		const report = await reportModel.findByIdAndUpdate(
+			req.params.id,
+			{ $set: updatedReport },
+			{ new: true, setDefaultsOnInsert: true }
+		);
+		if (!report) {
+			return res.status(StatusCodes.NOT_FOUND).send(`Report not found : ${req.params.id}`);
+		}
+
+		res.status(StatusCodes.OK).send(report._id);
 	} catch (error) {
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
 	}

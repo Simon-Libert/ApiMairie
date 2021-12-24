@@ -40,10 +40,10 @@ export const updateUser = async (req, res) => {
 		return res.status(StatusCodes.BAD_REQUEST).send(`Invalid parameter : ${req.user}`);
 
 	try {
-		const user = await userModel.findByIdAndUpdate(req.user);
+		const user = await userModel.findByIdAndUpdate(req.user, req.body);
 		if (!user) return res.status(StatusCodes.NOT_FOUND).send('User not found');
 
-		res.status(StatusCodes.OK).send(user);
+		res.status(StatusCodes.OK).json({ message: 'User updated', user });
 		user.save();
 	} catch (error) {
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
