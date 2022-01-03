@@ -28,7 +28,7 @@ router.get(
 	allReportsFromUser
 );
 
-router.post('/', uploadImage, addReport);
+router.post('/', passport.authenticate('jwt', { session: false }), uploadImage, addReport);
 
 //http://localhost:3500/api/v1/reports/:reportsId
 router.put(
