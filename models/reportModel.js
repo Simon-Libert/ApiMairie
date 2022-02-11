@@ -44,14 +44,12 @@ const reportSchema = new mongoose.Schema(
 		lastName: {
 			type: String,
 			trim: true,
-			required: true,
 			minlength: [2, "Le prénom d'utilisateur doit contenir au moins 2 caractères"],
 			maxlength: [50, "Le prénom d'utilisateur ne doit pas dépasser 50 caractères"],
 		},
 		firstName: {
 			type: String,
 			trim: true,
-			required: true,
 			minlength: [2, "Le nom d'utilisateur doit contenir au moins 2 caractères"],
 			maxlength: [50, "Le nom d'utilisateur ne doit pas dépasser 50 caractères"],
 		},

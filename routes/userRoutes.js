@@ -18,7 +18,7 @@ const router = Router();
 router.post('/register', passport.authenticate('signUp', { session: false }), signUp);
 
 // http://localhost:3500/api/v1/users/login
-router.post('/login', passport.authenticate('signIn', { session: false }), signIn);
+router.post('/login', signIn);
 
 // http://localhost:3500/api/v1/users/update
 router.put('/update', passport.authenticate('jwt', { session: false }), updateUser);
