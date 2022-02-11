@@ -32,7 +32,6 @@ const reportSchema = new mongoose.Schema(
 		},
 		time: {
 			type: String,
-			required: true,
 		},
 		alertAddress: {
 			type: String,
