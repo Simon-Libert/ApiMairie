@@ -20,13 +20,8 @@ import uploadImage from '../utils/cloudinary.js';
 //http://localhost:3500/api/v1/reports
 router.get('/', passport.authenticate('jwt', { session: false }), adminUser(['admin']), allReports);
 
-//http://localhost:3500/api/v1/reports/:userId
-router.get(
-	'/:id',
-	passport.authenticate('jwt', { session: false }),
-	adminUser(['admin']),
-	allReportsFromUser
-);
+//http://localhost:3500/api/v1/reports/user
+router.get('/user', passport.authenticate('jwt', { session: false }), allReportsFromUser);
 
 router.post('/', passport.authenticate('jwt', { session: false }), uploadImage, addReport);
 

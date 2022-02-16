@@ -18,7 +18,8 @@ export const allReports = async (req, res) => {
 
 export const allReportsFromUser = async (req, res) => {
 	try {
-		const reports = await reportModel.find({ ownerId: req.params.id });
+		const reports = await reportModel.find({ ownerId: req.user });
+
 		res.status(200).json({ reports });
 	} catch (error) {
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
@@ -26,15 +27,13 @@ export const allReportsFromUser = async (req, res) => {
 };
 
 export const addReport = async (req, res) => {
+	console.log(req.body);
 	const {
-		ownerId,
-		status,
 		type,
 		description,
 		date,
-		time,
 		alertAddress,
-		lastName,
+		/* 	lastName,
 		firstName,
 		userAddress,
 		postCode,
@@ -42,20 +41,18 @@ export const addReport = async (req, res) => {
 		email,
 		phone,
 		image,
-		video,
+		video, */
 	} = req.body;
 
 	try {
 		const newReport = await reportModel.create({
 			//faire un try catch
-			ownerId,
-			status,
+			ownerId: req.user,
 			type,
 			description,
 			date,
-			time,
 			alertAddress,
-			lastName,
+			/* 	lastName,
 			firstName,
 			userAddress,
 			postCode,
@@ -63,12 +60,12 @@ export const addReport = async (req, res) => {
 			email,
 			phone,
 			image,
-			video,
+			video, */
 		});
 
 		newReport.save();
 
-		let emailService;
+		/* let emailService;
 		switch (type) {
 			case 'voirie':
 				emailService = 'voirie@simplonville.co';
@@ -107,7 +104,7 @@ export const addReport = async (req, res) => {
 				</ul>
 			`
 		);
-
+ */
 		res.status(200).json({ newReport });
 	} catch (error) {
 		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: error.message });
